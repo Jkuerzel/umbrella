@@ -1,0 +1,12 @@
+ruby do_not_peek_possible_solution.rb
+========================================
+    Will you need an umbrella today?    
+========================================
+
+Where are you?
+Kassel
+Checking the weather at Kassel....
+Your coordinates are 51.3118828, 9.4915751.
+It is currently 50.76°F.
+Next hour: Rain
+You probably won't need an umbrella.

@@ -4,6 +4,7 @@ require "daru"
 require "date"
 require "http"
 require "json"
+require "ascii_charts"
 
 puts "========================================
     Will you need an umbrella today?    
@@ -109,13 +110,25 @@ puts "Your coordinates are #{latitude}, #{longitude}."
 puts "It is currently #{temperature_C.round(2)}°C or #{temperature.round(2)}°F."
 puts "Next hour: #{df['Summary'][0]}"
 
-df["Raining"].each do |check|
-  if check==true
-    puts "In #{counter+1} hours, there is a #{(df['Propability'][counter]*100).to_i}% chance of precipitation."
+Rain_array = []  # Properly initializing the array
+
+df["Raining"].each_with_index do |check, index|
+  # Collecting hour and probability into Rain_array
+  Rain_array.push([index + 1, (df['Propability'][index] * 100).to_i])
+  if check == true
+    rains_next_12_hours = true
   end
-  counter=counter+1
 end
 
+# Generating the ASCII chart
+# Generating the ASCII chart with a fixed scale from 0 to 100
+puts AsciiCharts::Cartesian.new(
+  Rain_array,
+  bar: true,
+  hide_zero: true,
+  min: 0,   # Set the minimum value for y-axis
+  max: 100  # Set the maximum value for y-axis
+).draw
 
 if rains_next_12_hours==false
   puts "You probably won't need an umbrella."
